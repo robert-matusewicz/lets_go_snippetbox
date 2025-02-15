@@ -1,0 +1,41 @@
+{{define "title"}}Create a new snippet{{end}}
+
+{{define "main"}}
+<form action="/snippet/create" method="POST">
+    <input type="hidden" name="csrf_token" value="{{.CSRFToken}}">
+    <div>
+        <label for="title">Title:</label>
+        {{with .Form.FieldErrors.title}}
+            <label class="error">{{.}}</label>
+        {{end}}
+        <input id="title" type="text" name="title" value="{{.Form.Title}}"/>
+    </div>
+    <div>
+        <label for="content">Content:</label>
+        {{with .Form.FieldErrors.content}}
+            <label class="error">{{.}}</label>
+        {{end}}
+        <textarea id="content" type="text" name="content">{{.Form.Content}}</textarea>
+    </div>
+    <div>
+        <fieldset>
+        <legend>Delete in:</legend>
+        {{with .Form.FieldErrors.expires}}
+            <label class="error">{{.}}</label>
+        {{end}}
+        <input id="oneYear" type="radio" name="expires" value="365" {{if (eq .Form.Expires 365)}}checked{{end}}>
+        <label for="oneYear">One Year</label>
+
+        <input id="oneWeek" type="radio" name="expires" value="7" {{if (eq .Form.Expires 7)}}checked{{end}}>
+        <label for="oneWeek">One Week</label>
+
+        <input id="oneDay" type="radio" name="expires" value="1" {{if (eq .Form.Expires 1)}}checked{{end}}>
+        <label for="oneDay">One Day</label>
+
+        </fieldset>
+    </div>
+    <div>
+        <input type="submit" value="Create snippet">
+    </div>
+</form>
+{{end}}
